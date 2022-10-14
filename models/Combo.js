@@ -5,6 +5,8 @@ const Schema = mongoose.Schema;
 const Combo = mongoose.model(
     'Combo',
     new Schema({
+
+        
         name: {
             type: String,
             required: true
@@ -47,6 +49,11 @@ const Combo = mongoose.model(
             type: Schema.ObjectId,
             ref: 'Adicional'
         }, 
+
+
+    
+
+
         
     },
 

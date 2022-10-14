@@ -109,13 +109,6 @@ router.get('/prato/name/:name', async (req, res) => {
             res.status(404).json({ message: 'O prato informado não existe, porfavor verifique os dados inseridos e tente novamente'})
             return
         }
-    
-        
-
-        if(name ) {
-            res.status(404).json({ message: 'O prato informado não existe, porfavor verifique os dados inseridos e tente novamente'})
-            return
-        }
 
 
         else{

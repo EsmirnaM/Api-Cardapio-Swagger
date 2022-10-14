@@ -16,20 +16,30 @@ app.use(
 
 app.use(express.json())
 
-//Requisição prato
+
+//Requisição cliente-----------------------------------------
+const clienteRoutes = require('./routes/clienteRoutes')
+
+
+app.use('/', clienteRoutes)
+
+
+//Requisição prato------------------------------------------
 const pratoRoutes = require('./routes/pratoRoutes')
 
 
 app.use('/', pratoRoutes)
 
-//Requisição bebida
+
+//Requisição bebida-----------------------------------------
 
 const bebidaRoutes = require('./routes/bebidaRoutes')
 
 
 app.use('/', bebidaRoutes)
 
-//Requisicao sobremesa
+
+//Requisicao sobremesa--------------------------------------
 
 const sobremesaRoutes = require('./routes/sobremesaRoutes')
 
@@ -38,12 +48,13 @@ app.use('/', sobremesaRoutes)
 
 
 
-//Requisicao adicional
+//Requisicao adicional--------------------------------------
 
 const adicionalRoutes = require('./routes/adicionalRoutes')
 
 
 app.use('/', adicionalRoutes)
+
 
 //Requisicao combo
 
