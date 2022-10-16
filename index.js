@@ -2,8 +2,18 @@
 
 const express = require('express')
 const mongoose = require('mongoose')
+const swaggerUI = require('swagger-ui-express')
+const swaggerDocs = require('./swagger.json')
 
-const app = express()
+
+const app = express();
+
+
+
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
+
 
 
 
@@ -17,12 +27,12 @@ app.use(
 app.use(express.json())
 
 
+
 //Requisição cliente-----------------------------------------
 const clienteRoutes = require('./routes/clienteRoutes')
 
 
 app.use('/', clienteRoutes)
-
 
 //Requisição prato------------------------------------------
 const pratoRoutes = require('./routes/pratoRoutes')

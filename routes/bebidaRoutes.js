@@ -45,7 +45,7 @@ router.post('/bebida', async (req,res) => {
     //validação caso o dado informado já existe na base de dados
 
         //nome
-        const nomeExiste = await Cliente.findOne ({name: name})
+        const nomeExiste = await Bebida.findOne ({name: name})
 
         if (nomeExiste){
             res.status(400).json({
@@ -55,7 +55,7 @@ router.post('/bebida', async (req,res) => {
         }
 
         //descrição
-        const descriptionExiste = await Cliente.findOne ({description: description})
+        const descriptionExiste = await Bebida.findOne ({description: description})
 
         if (descriptionExiste){
             res.status(400).json({

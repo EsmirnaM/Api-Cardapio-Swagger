@@ -4,7 +4,7 @@ const { application } = require('express')
 const Sobremesa = require('../models/Sobremesa')
 
 
-//---------------------------------------Post----------------------------------------------------
+//-------------------------------------------Post----------------------------------------------------
 
 router.post('/sobremesa', async (req,res) => {
     // req.body
@@ -12,10 +12,10 @@ router.post('/sobremesa', async (req,res) => {
     const {name, description, price, light} = req.body
 
     
- //-----------------------------------------validações-----------------------------------------
+//-----------------------------------------validações-----------------------------------------
 
 
-    //-----------------------validação caso esteja faltando inserir um dado-----------------------
+//--------------------------validação caso esteja faltando inserir um dado-----------------------
     
     if(!name) {
         res.status(400).json({error:'É necessario informar o nome da sobremesa'})
@@ -35,7 +35,7 @@ router.post('/sobremesa', async (req,res) => {
     //----------------validação caso o dado informado já existe na base de dados---------------------
 
         //nome
-        const nomeExiste = await Cliente.findOne ({name: name})
+        const nomeExiste = await Sobremesa.findOne ({name: name})
 
         if (nomeExiste){
             res.status(400).json({
@@ -45,7 +45,7 @@ router.post('/sobremesa', async (req,res) => {
         }
 
         //descrição
-        const descriptionExiste = await Cliente.findOne ({description: description})
+        const descriptionExiste = await Sobremesa.findOne ({description: description})
 
         if (descriptionExiste){
             res.status(400).json({

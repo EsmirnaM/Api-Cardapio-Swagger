@@ -13,7 +13,7 @@ router.post('/prato', async (req,res) => {
     // req.body
 
     const {name, description, price, veggie} = req.body
-    console.log(req.body)
+    
 
     const prato = {
         name, description, price, veggie, 
@@ -26,10 +26,58 @@ router.post('/prato', async (req,res) => {
 
     //-----------------------validação caso esteja faltando inserir um dado-----------------------    
 
+        if(!name && !description && !price && !veggie){
+        res.status(400).json({error:'É necessario informar nome, descrição, preço e se o prato é ou não vegetariano'})
+        return 
+        }
+
+        if(!name && !description && !price){
+            res.status(400).json({error:'É necessario informar nome, descrição e o preço do prato'})
+            return 
+            }
+    
+        if(!name && !description && !veggie){
+            res.status(400).json({error:'É necessario informar nome, descrição e se o prato é ou não vegetariano'})
+            return 
+            }
+
+        if(!name && !price && !veggie){
+            res.status(400).json({error:'É necessario informar nome, preço e se o prato é ou não vegetariano'})
+            return 
+            }
+
+        if(!description && !price && !veggie){
+            res.status(400).json({error:'É necessario informar preço, descrição, preço e se o prato é ou não vegetariano'})
+            return 
+            }
+
+        if(!name && !description ) {
+            res.status(400).json({error:'É necessario informar o nome e a descrição do prato'})
+            return
+            }
+
+        if(!name && !price ) {
+            res.status(400).json({error:'É necessario informar o nome e o preço do prato'})
+            return
+            }
+
+        if(!name && !veggie ) {
+            res.status(400).json({error:'É necessario informar o nome e se o prato é vegetariano'})
+            return
+            }
+
+        if(!description && !veggie ) {
+            res.status(400).json({error:'É necessario informar a descrição e se o prato é vegetariano'})
+            return
+            }
+        
+
         if(!name) {
             res.status(400).json({error:'É necessario informar o nome do prato'})
             return
         }
+
+        
     
         if(!description) {
             res.status(400).json({error:'É necessario informar a descrição do prato'})
@@ -40,9 +88,11 @@ router.post('/prato', async (req,res) => {
             res.status(400).json({error:'É necessario informar o preço do prato'})
             return
         }
+
+        
     
-        if(veggie == "undefined") {
-            res.status(500).json({error:'É necessario informar se o prato e veggie ou não'})
+        if(veggie == undefined) {
+            res.status(500).json({error:'É necessario informar se o prato é vegetariano ou não'})
             return
         }
 
@@ -50,7 +100,7 @@ router.post('/prato', async (req,res) => {
     //----------------validação caso o dado informado já existe na base de dados---------------------
 
         //nome
-        const nomeExiste = await Cliente.findOne ({name: name})
+        const nomeExiste = await Prato.findOne ({name: name})
 
         if (nomeExiste){
             res.status(400).json({
@@ -60,7 +110,7 @@ router.post('/prato', async (req,res) => {
         }
 
         //descrição
-        const descriptionExiste = await Cliente.findOne ({description: description})
+        const descriptionExiste = await Prato.findOne ({description: description})
 
         if (descriptionExiste){
             res.status(400).json({

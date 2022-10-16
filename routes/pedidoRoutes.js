@@ -33,6 +33,8 @@ router.post('/pedido', async (req,res) => {
             return
         }
 
+        
+
 
 //validação bebida
         const bebida1 = await Bebida.findOne({ _id: bebida })
@@ -95,7 +97,7 @@ router.post('/pedido', async (req,res) => {
 
    router.get('/pedido/:id', async (req, res) => {
     
-   const id = req.params.id
+   const id = req.params
    
    try {
     const pedido = await Pedido.findOne({ _id: id })

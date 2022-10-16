@@ -4,6 +4,7 @@ const { application } = require('express')
 const Adicional = require('../models/Adicional')
 
 
+
 //-----------------------------------------Post------------------------------------------------
 
 router.post('/adicional', async (req,res) => {
@@ -48,13 +49,11 @@ router.post('/adicional', async (req,res) => {
         }
 
 
-    //validação caso o dado informado já existe na base de dados
+    //---------------validação caso o dado informado já exista na base de dados-------------------------
 
-
-
-        
+ 
         //nome
-        const nomeExiste = await Cliente.findOne ({name: name})
+        const nomeExiste = await Adicional.findOne ({name: name})
 
         if (nomeExiste){
             res.status(400).json({
@@ -64,7 +63,7 @@ router.post('/adicional', async (req,res) => {
         }
 
         //descrição
-        const descriptionExiste = await Cliente.findOne ({description: description})
+        const descriptionExiste = await Adicional.findOne ({description: description})
 
         if (descriptionExiste){
             res.status(400).json({
@@ -90,6 +89,8 @@ router.post('/adicional', async (req,res) => {
 
 
    router.get('/adicionais', async (req, res) => {
+    
+
     try {
 
         const adicional = await Adicional.find()

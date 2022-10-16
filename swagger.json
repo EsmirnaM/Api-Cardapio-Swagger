@@ -1,0 +1,64 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+    "title": "Node Swagger",
+    
+    "description": "Documentação Api Cardápio",
+    "contact":{
+        "email": "esmirnamneris@gmail.com"
+    },
+    "version": "1.0.00"
+},
+
+"servers":[
+    {
+        "url": "http://localhost:3000",
+        "description": "API"
+    }
+],
+
+"paths":{
+    "/adicional": {
+        "post": {
+            "summary": "Cadastrar Adicional",
+            "description": "Rota para cadastrar um novo adicional",
+            "tags": ["Adicionais"],
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{
+                          "$ref": "#/components/schemas/Adicional"
+                        }
+                    }
+                }
+            }
+        }
+    }
+},
+
+"components":{
+    "schemas": {
+        "Adicional":{
+                "type": "object",
+                "properties": {
+                    "name":{
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "String"
+                        
+                    },
+
+                   "price": {
+                        "type": "number"
+                    },
+
+                    "veggie": {
+                        "type": "boolean"
+                
+                    }
+                }
+            }
+        }
+    }
+}

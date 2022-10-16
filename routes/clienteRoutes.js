@@ -23,10 +23,6 @@ router.post('/cliente', async (req,res) => {
         return
     }
 
-    else{
-        res.status(200).json(bebida)
-        }
-
     if(!cpf) {
         res.status(400).json({error:'É necessario informar o seu cpf'})
         return
@@ -89,12 +85,7 @@ router.post('/cliente', async (req,res) => {
         }
 
         
-        if (email ){
-            res.status(400).json({
-                message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
-            })
-            return
-        }
+       
     
     
     const cliente = {
