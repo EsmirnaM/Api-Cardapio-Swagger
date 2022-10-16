@@ -4,17 +4,28 @@ const { application } = require('express')
 const Cliente = require('../models/cliente')
 
 
-//Post
+//----------------------------------Post---------------------------------------
 
 router.post('/cliente', async (req,res) => {
     // req.body
 
     const {name, cpf, email, phone} = req.body
 
+
+
+    //---------------------------validações----------------------------------
+
+
+    //validação caso esteja faltando inserir um dado
+
     if(!name) {
         res.status(400).json({error:'É necessario informar o seu nome'})
         return
     }
+
+    else{
+        res.status(200).json(bebida)
+        }
 
     if(!cpf) {
         res.status(400).json({error:'É necessario informar o seu cpf'})
@@ -31,7 +42,59 @@ router.post('/cliente', async (req,res) => {
         return
     }
 
-   
+
+    //validação caso o dado informado já existe na base de dados
+
+
+
+        //nome
+         const nomeExiste = await Cliente.findOne ({name: name})
+
+         if (nomeExiste){
+             res.status(400).json({
+                 message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
+             })
+             return
+         }
+
+
+        //cpf
+        const cpfExiste = await Cliente.findOne ({cpf:cpf})
+
+        if (cpfExiste){
+            res.status(400).json({
+                message: 'O cpf informado já está asociado a uma conta, por favor verifique os dados informados e tente novamente'
+            })
+            return
+        }
+
+        //email
+        const emailExiste = await Cliente.findOne ({email: email})
+
+        if (emailExiste){
+            res.status(400).json({
+                message: 'O email informado já existe, por favor utilize outro email'
+            })
+            return
+        }
+
+        //telefone
+        const phoneExiste = await Cliente.findOne ({phone:phone})
+
+        if (phoneExiste){
+            res.status(400).json({
+                message: 'O telefone informado já existe, por favor verifique os dados e tente novamente'
+            })
+            return
+        }
+
+        
+        if (email ){
+            res.status(400).json({
+                message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
+            })
+            return
+        }
     
     
     const cliente = {
@@ -51,7 +114,7 @@ router.post('/cliente', async (req,res) => {
     })
 
 
-    //Get
+    //----------------------------------------Get------------------------------------------------
    router.get('/clientes', async (req, res) => {
     try {
 
@@ -66,7 +129,7 @@ router.post('/cliente', async (req,res) => {
    })
 
 
-   //get por id
+   //------------------------------------get por id------------------------------------------------
 
    router.get('/cliente/:id', async (req, res) => {
     
@@ -81,6 +144,7 @@ router.post('/cliente', async (req,res) => {
         return
     }
 
+
     res.status(200).json(cliente)
 
    } catch (error) {
@@ -88,7 +152,7 @@ router.post('/cliente', async (req,res) => {
    }
 })
 
-//atualização de dados
+//--------------------------------------atualização de dados-------------------------------------------
 
 router.put('/cliente/:id', async(req, res) => {
     
@@ -115,7 +179,7 @@ router.put('/cliente/:id', async(req, res) => {
 })
 
 
-//Delete
+//---------------------------------------Delete-----------------------------------------------------
 
 
 router.delete('/cliente/:id', async (req, res) => {
@@ -124,12 +188,18 @@ router.delete('/cliente/:id', async (req, res) => {
 
     const cliente = await Cliente.findOne({ _id: id })
     
-    if(!cliente) {
-        res.status(404).json({ message: 'O cliente informado não existe, porfavor verifique os dados inseridos e tente novamente'})
-        return
-    }
+   
+
+
 
     try {
+
+        if(!cliente) {
+            res.status(404).json({ message: 'O cliente informado não existe, porfavor verifique os dados inseridos e tente novamente'})
+            return
+        }
+    
+        
 
         await Cliente.deleteOne({ _id: id})
 

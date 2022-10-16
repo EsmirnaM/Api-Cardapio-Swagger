@@ -9,6 +9,7 @@ const Prato = mongoose.model(
             type: String,
             required: true, 
             unique: true
+            
         },
 
         description: {
@@ -18,7 +19,8 @@ const Prato = mongoose.model(
 
         price: {
             type: Number,
-            required: true
+            required: true,
+            
         },
 
 

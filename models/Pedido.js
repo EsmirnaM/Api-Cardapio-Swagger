@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema;
 
-const Combo = mongoose.model(
-    'Combo',
+const Pedido = mongoose.model(
+    'Pedido',
     new Schema({
 
         
@@ -31,7 +31,10 @@ const Combo = mongoose.model(
 
         prato: {
             type: Schema.ObjectId,
-            ref: 'Prato'
+            ref: 'Prato',
+            
+           
+           
         },
         
 
@@ -50,6 +53,8 @@ const Combo = mongoose.model(
             ref: 'Adicional'
         }, 
 
+        
+
 
     
 
@@ -66,4 +71,4 @@ const Combo = mongoose.model(
 
 
 
-module.exports = Combo
+module.exports = Pedido

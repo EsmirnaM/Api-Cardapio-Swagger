@@ -4,13 +4,18 @@ const { application } = require('express')
 const Sobremesa = require('../models/Sobremesa')
 
 
-//Post
+//---------------------------------------Post----------------------------------------------------
 
 router.post('/sobremesa', async (req,res) => {
     // req.body
 
     const {name, description, price, light} = req.body
 
+    
+ //-----------------------------------------validações-----------------------------------------
+
+
+    //-----------------------validação caso esteja faltando inserir um dado-----------------------
     
     if(!name) {
         res.status(400).json({error:'É necessario informar o nome da sobremesa'})
@@ -26,6 +31,30 @@ router.post('/sobremesa', async (req,res) => {
         res.status(400).json({error:'É necessario informar o preço da sobremesa'})
         return
     }
+
+    //----------------validação caso o dado informado já existe na base de dados---------------------
+
+        //nome
+        const nomeExiste = await Cliente.findOne ({name: name})
+
+        if (nomeExiste){
+            res.status(400).json({
+                message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
+            })
+            return
+        }
+
+        //descrição
+        const descriptionExiste = await Cliente.findOne ({description: description})
+
+        if (descriptionExiste){
+            res.status(400).json({
+                message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
+            })
+            return
+        }
+
+
 
     
     const sobremesa = {
@@ -45,8 +74,11 @@ router.post('/sobremesa', async (req,res) => {
     })
 
 
-    //Get
-   router.get('/sobremesas', async (req, res) => {
+    //---------------------------------------------Get---------------------------------------
+   
+   
+   
+    router.get('/sobremesas', async (req, res) => {
     try {
 
         const sobremesa = await Sobremesa.find()
@@ -60,7 +92,8 @@ router.post('/sobremesa', async (req,res) => {
    })
 
 
-   //get por id
+   //----------------------------------------get por id----------------------------------------
+
 
    router.get('/sobremesa/:id', async (req, res) => {
     
@@ -82,7 +115,9 @@ router.post('/sobremesa', async (req,res) => {
    }
 })
 
-//atualização de dados
+//--------------------------------------atualização de dados----------------------------------------
+
+
 
 router.put('/sobremesa/:id', async(req, res) => {
     
@@ -109,7 +144,7 @@ router.put('/sobremesa/:id', async(req, res) => {
 })
 
 
-//Delete
+//------------------------------------------------Delete--------------------------------------------
 
 
 router.delete('/sobremesa/:id', async (req, res) => {

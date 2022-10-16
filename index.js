@@ -58,7 +58,7 @@ app.use('/', adicionalRoutes)
 
 //Requisicao combo
 
-const comboRoutes = require('./routes/comboRoutes')
+const comboRoutes = require('./routes/pedidoRoutes')
 
 
 app.use('/', comboRoutes)

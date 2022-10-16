@@ -7,45 +7,70 @@ const Prato = require('../models/Prato')
 
 
 
-//Post
+//-----------------------------------------------Post-------------------------------------------
 
 router.post('/prato', async (req,res) => {
     // req.body
 
     const {name, description, price, veggie} = req.body
     console.log(req.body)
-    if(!name) {
-        res.status(400).json({error:'É necessario informar o nome do prato'})
-        return
-    }
 
-    if(!description) {
-        res.status(400).json({error:'É necessario informar a descrição do prato'})
-        return
-    }
-
-    if(!price) {
-        res.status(400).json({error:'É necessario informar o preço do prato'})
-        return
-    }
-    console.log(veggie)
-    if(veggie == "undefined") {
-        res.status(500).json({error:'É necessario informar se o prato e veggie ou não'})
-        return
-    }
-
-   
-
-
-    
-    
-    
-    
     const prato = {
         name, description, price, veggie, 
     }
-    
+
     try {
+
+    //-----------------------------------------validações-----------------------------------------
+
+
+    //-----------------------validação caso esteja faltando inserir um dado-----------------------    
+
+        if(!name) {
+            res.status(400).json({error:'É necessario informar o nome do prato'})
+            return
+        }
+    
+        if(!description) {
+            res.status(400).json({error:'É necessario informar a descrição do prato'})
+            return
+        }
+    
+        if(!price) {
+            res.status(400).json({error:'É necessario informar o preço do prato'})
+            return
+        }
+    
+        if(veggie == "undefined") {
+            res.status(500).json({error:'É necessario informar se o prato e veggie ou não'})
+            return
+        }
+
+
+    //----------------validação caso o dado informado já existe na base de dados---------------------
+
+        //nome
+        const nomeExiste = await Cliente.findOne ({name: name})
+
+        if (nomeExiste){
+            res.status(400).json({
+                message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
+            })
+            return
+        }
+
+        //descrição
+        const descriptionExiste = await Cliente.findOne ({description: description})
+
+        if (descriptionExiste){
+            res.status(400).json({
+                message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
+            })
+            return
+        }
+
+
+        
      
         await Prato.create(prato)
     
@@ -54,11 +79,17 @@ router.post('/prato', async (req,res) => {
     } catch (error) {
         res.status(500).json({ error: error })
     }
+
+
+
     
     })
 
 
-    //Get
+    
+
+
+    //-------------------------------------------Get---------------------------------------------
    router.get('/pratos', async (req, res) => {
     try {
 
@@ -73,7 +104,7 @@ router.post('/prato', async (req,res) => {
    })
 
 
-   //get por id
+   //------------------------------------get por id----------------------------------------
 
    router.get('/prato/:id', async (req, res) => {
     
@@ -96,7 +127,9 @@ router.post('/prato', async (req,res) => {
 })
 
 
-//get por name
+//---------------------------------------get pelo name--------------------------------------
+
+
 router.get('/prato/name/:name', async (req, res) => {
     
     const {name} = req.params
@@ -122,7 +155,9 @@ router.get('/prato/name/:name', async (req, res) => {
  })
  
 
-//atualização de dados
+//-------------------------------------atualização de dados----------------------------------------------
+
+
 
 router.put('/prato/:id', async(req, res) => {
     
@@ -149,7 +184,7 @@ router.put('/prato/:id', async(req, res) => {
 })
 
 
-//Delete
+//---------------------------------------------Delete-------------------------------------------
 
 
 router.delete('/prato/:id', async (req, res) => {
@@ -158,10 +193,12 @@ router.delete('/prato/:id', async (req, res) => {
 
     const prato = await Prato.findOne({ _id: id })
     
-    if(!prato) {
+    if(!prato  ) {
         res.status(404).json({ message: 'O prato informado não existe, porfavor verifique os dados inseridos e tente novamente'})
         return
     }
+
+
 
     try {
 

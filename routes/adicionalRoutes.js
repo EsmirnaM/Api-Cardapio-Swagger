@@ -4,36 +4,75 @@ const { application } = require('express')
 const Adicional = require('../models/Adicional')
 
 
-//Post
+//-----------------------------------------Post------------------------------------------------
 
 router.post('/adicional', async (req,res) => {
     // req.body
 
     const {name, description, price, veggie} = req.body
+    console.log(req.body)
 
-    if(!name) {
-        res.status(400).json({error:'É necessario informar o nome do adicional'})
-        return
-    }
-
-    if(!description) {
-        res.status(400).json({error:'É necessario informar a descrição do adicional'})
-        return
-    }
-
-    if(!price) {
-        res.status(400).json({error:'É necessario informar o preço do adicional'})
-        return
-    }
 
    
-    
-    
+
     const adicional = {
-        name, description, price, veggie
+        name, description, price, veggie, 
     }
     
     try {
+
+        
+    //---------------------------------validações----------------------------------
+
+
+    //validação caso esteja faltando inserir um dado
+
+        if(!name) {
+            res.status(400).json({error:'É necessario informar o nome do adicional'})
+            return
+        }
+    
+        if(!description) {
+            res.status(400).json({error:'É necessario informar a descrição do adicional'})
+            return
+        }
+    
+        if(!price) {
+            res.status(400).json({error:'É necessario informar o preço do adicional'})
+            return
+        }
+        
+        if(veggie == "undefined") {
+            res.status(500).json({error:'É necessario informar se o adicional e veggie ou não'})
+            return
+        }
+
+
+    //validação caso o dado informado já existe na base de dados
+
+
+
+        
+        //nome
+        const nomeExiste = await Cliente.findOne ({name: name})
+
+        if (nomeExiste){
+            res.status(400).json({
+                message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
+            })
+            return
+        }
+
+        //descrição
+        const descriptionExiste = await Cliente.findOne ({description: description})
+
+        if (descriptionExiste){
+            res.status(400).json({
+                message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
+            })
+            return
+        }
+
      
         await Adicional.create(adicional)
     
@@ -44,9 +83,12 @@ router.post('/adicional', async (req,res) => {
     }
     
     })
+    
+
+    //------------------------------------Get------------------------------------
 
 
-    //Get
+
    router.get('/adicionais', async (req, res) => {
     try {
 
@@ -61,7 +103,8 @@ router.post('/adicional', async (req,res) => {
    })
 
 
-   //get por id
+   //-------------------------------------get por id----------------------------------------------
+
 
    router.get('/adicional/:id', async (req, res) => {
     
@@ -83,7 +126,35 @@ router.post('/adicional', async (req,res) => {
    }
 })
 
-//atualização de dados
+
+//-----------------------------------get pelo name----------------------------------------------
+
+router.get('/adicional/name/:name', async (req, res) => {
+    
+    const {name} = req.params
+    
+    try {
+     const adicional = await Adicional.findOne({ name: name })
+     
+     
+        if(!adicional) {
+            res.status(404).json({ message: 'O adicional informado não existe, porfavor verifique os dados inseridos e tente novamente'})
+            return
+        }
+
+
+        else{
+        res.status(200).json(adicional)
+        }
+
+
+    } catch (error) {
+     res.status(500).json({ error: error})
+    }
+ })
+ 
+
+//---------------------------------atualização de dados--------------------------------------------
 
 router.put('/adicional/:id', async(req, res) => {
     
@@ -110,7 +181,7 @@ router.put('/adicional/:id', async(req, res) => {
 })
 
 
-//Delete
+//------------------------------------------Delete-----------------------------------------------
 
 
 router.delete('/adicional/:id', async (req, res) => {

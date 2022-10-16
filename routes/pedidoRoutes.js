@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { application } = require('express')
-const Combo = require('../models/Combo')
+const Pedido = require('../models/Pedido')
 const Prato = require('../models/Prato')
 const Bebida = require('../models/Bebida')
 const Sobremesa = require('../models/Sobremesa')
@@ -10,16 +10,16 @@ const Adicional = require('../models/Adicional')
 
 
 
-//Post
+//------------------------------------------Post---------------------------------------------------
 
-router.post('/combo', async (req,res) => {
+router.post('/pedido', async (req,res) => {
     // req.body
 
     const {name, description, price, veggie, prato, bebida, sobremesa, adicional} = req.body
 
  
     
-    const combo = {
+    const pedido = {
         name, description, price, veggie, prato, bebida, sobremesa, adicional
     }
     
@@ -29,14 +29,14 @@ router.post('/combo', async (req,res) => {
         
     
         if(!prato1) {
-            res.status(404).json({ message: 'O prato informado não existe, porfavor verifique os dados inseridos e tente novamente'})
+            res.status(404).json({ message: 'a id informada não existe, porfavor verifique os dados inseridos e tente novamente'})
             return
         }
 
 
 //validação bebida
         const bebida1 = await Bebida.findOne({ _id: bebida })
-        console.log(bebida1)
+        
     
         if(!bebida1) {
             res.status(404).json({ message: 'A bebida informada não existe, porfavor verifique os dados inseridos e tente novamente'})
@@ -63,11 +63,11 @@ router.post('/combo', async (req,res) => {
         }  
 
 
-        await Combo.create(combo)
+        await Pedido.create(pedido)
 
         
     
-        res.status(200).json({message:'Combo cadastrado com sucesso' })
+        res.status(200).json({message:'Pedido cadastrado com sucesso' })
         
     } catch (error) {
         res.status(500).json({ error: error })
@@ -76,13 +76,13 @@ router.post('/combo', async (req,res) => {
     })
 
 
-     //Get
-   router.get('/combos', async (req, res) => {
+     //-----------------------------------------Get---------------------------------------------
+   router.get('/pedido', async (req, res) => {
     try {
 
-        const combo = await Combo.find().populate('prato').populate('bebida').populate('sobremesa').populate('adicional')
+        const pedido = await Pedido.find().populate('prato').populate('bebida').populate('sobremesa').populate('adicional')
 
-        res.status(200).json(combo)
+        res.status(200).json(pedido)
         
     } catch (error) {
         res.status(500).json({ error: error })
@@ -91,47 +91,47 @@ router.post('/combo', async (req,res) => {
    })
 
 
-   //get por id
+   //-----------------------------------------get por id---------------------------------------------
 
-   router.get('/combos/:id', async (req, res) => {
+   router.get('/pedido/:id', async (req, res) => {
     
    const id = req.params.id
    
    try {
-    const combo = await Combo.findOne({ _id: id })
+    const pedido = await Pedido.findOne({ _id: id })
     
     
-    if(!combo) {
-        res.status(404).json({ message: 'O combo informado não existe, porfavor verifique os dados inseridos e tente novamente'})
+    if(!pedido) {
+        res.status(404).json({ message: 'O pedido informado não existe, porfavor verifique os dados inseridos e tente novamente'})
         return
     }
 
-    res.status(200).json(combo)
+    res.status(200).json(pedido)
 
    } catch (error) {
     res.status(500).json({ error: error})
    }
 })
 
-//atualização de dados
+//-------------------------------------------atualização de dados-------------------------------------
 
-router.put('/combos/:id', async(req, res) => {
+router.put('/pedido/:id', async(req, res) => {
     
     const id = req.params.id
 
     const { name, description, price, veggie } = req.body
 
-    const combo = {name, description, price, veggie}
+    const pedido = {name, description, price, veggie}
 
     try {
-        const updatedCombo = await Combo.updateOne({ _id: id }, combo)
+        const updatedPedido = await Pedido.updateOne({ _id: id }, pedido)
         
-        if(updatedCombo.matchedCount === 0) {
-         res.status(404).json({ message: "O combo informado não existe, porfavor verifique os dados inseridos e tente novamente"})   
+        if(updatedPedido.matchedCount === 0) {
+         res.status(404).json({ message: "O pedido informado não existe, porfavor verifique os dados inseridos e tente novamente"})   
          return
         }
 
-        res.status(200).json ({ message: 'Combo atualizado com sucesso'})
+        res.status(200).json ({ message: 'Pedido atualizado com sucesso'})
 
     } catch (error) {
         res.status(500).json({ error: error })
@@ -140,33 +140,33 @@ router.put('/combos/:id', async(req, res) => {
 })
 
 
+//----------------------------------------------Delete-----------------------------------
 
 
-//Delete
-
-
-router.delete('/combos/:id', async (req, res) => {
+router.delete('/pedido/:id', async (req, res) => {
 
     const id = req.params.id
 
-    const combo = await Combo.findOne({ _id: id })
+    const pedido = await Pedido.findOne({ _id: id })
     
-    if(!combo) {
-        res.status(404).json({ message: 'O combo informado não existe, porfavor verifique os dados inseridos e tente novamente'})
+    if(!pedido) {
+        res.status(404).json({ message: 'O pedido informado não existe, porfavor verifique os dados inseridos e tente novamente'})
         return
     }
 
     try {
 
-        await Combo.deleteOne({ _id: id})
+        await Pedido.deleteOne({ _id: id})
 
-        res.status(200).json ({ message: 'Combo excluido com sucesso'})
+        res.status(200).json ({ message: 'Pedido excluido com sucesso'})
         
     } catch (error) {
         res.status(500).json({ error: error })
     }
 
 })
+
+
 
 
 
