@@ -28,12 +28,16 @@ const Pedido = mongoose.model(
             required: true,
         },
 
+        cliente: {
+            type: Schema.ObjectId,
+            ref: 'Cliente'
+        }, 
+
 
         prato: {
             type: Schema.ObjectId,
             ref: 'Prato',
-            
-           
+
            
         },
         
@@ -52,6 +56,7 @@ const Pedido = mongoose.model(
             type: Schema.ObjectId,
             ref: 'Adicional'
         }, 
+
 
         
 

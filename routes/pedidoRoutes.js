@@ -79,10 +79,10 @@ router.post('/pedido', async (req,res) => {
 
 
      //-----------------------------------------Get---------------------------------------------
-   router.get('/pedido', async (req, res) => {
+     router.get('/pedido', async (req, res) => {
     try {
 
-        const pedido = await Pedido.find().populate('prato').populate('bebida').populate('sobremesa').populate('adicional')
+        const pedido = await Pedido.find().populate('cliente').populate('prato').populate('bebida').populate('sobremesa').populate('adicional')
 
         res.status(200).json(pedido)
         
