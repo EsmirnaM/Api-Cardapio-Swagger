@@ -6,23 +6,23 @@ const {Schema} = mongoose
 const Bebida = mongoose.model(
     'Bebida',
     new Schema({
-        name:{
+        nome:{
             type: String,
             required: true
         },
 
-        description: {
+        descrição: {
             type: String,
             required: true
         },
 
-        price: {
+        preço: {
             type: Number,
             required: true
         }, 
         
 
-        alcohol: {
+        álcool: {
             type: Boolean,
             required: true,
         },

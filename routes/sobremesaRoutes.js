@@ -9,7 +9,7 @@ const Sobremesa = require('../models/Sobremesa')
 router.post('/sobremesa', async (req,res) => {
     // req.body
 
-    const {name, description, price, light} = req.body
+    const {nome, descrição, preço, light} = req.body
 
     
 //-----------------------------------------validações-----------------------------------------
@@ -17,17 +17,17 @@ router.post('/sobremesa', async (req,res) => {
 
 //--------------------------validação caso esteja faltando inserir um dado-----------------------
     
-    if(!name) {
+    if(!nome) {
         res.status(400).json({error:'É necessario informar o nome da sobremesa'})
         return
     }
 
-    if(!description) {
+    if(!descrição) {
         res.status(400).json({error:'É necessario informar a descrição da sobremesa'})
         return
     }
 
-    if(!price) {
+    if(!preço) {
         res.status(400).json({error:'É necessario informar o preço da sobremesa'})
         return
     }
@@ -35,7 +35,7 @@ router.post('/sobremesa', async (req,res) => {
     //----------------validação caso o dado informado já existe na base de dados---------------------
 
         //nome
-        const nomeExiste = await Sobremesa.findOne ({name: name})
+        const nomeExiste = await Sobremesa.findOne ({nome: nome})
 
         if (nomeExiste){
             res.status(400).json({
@@ -45,9 +45,9 @@ router.post('/sobremesa', async (req,res) => {
         }
 
         //descrição
-        const descriptionExiste = await Sobremesa.findOne ({description: description})
+        const descriçãoExiste = await Sobremesa.findOne ({descrição: descrição})
 
-        if (descriptionExiste){
+        if (descriçãoExiste){
             res.status(400).json({
                 message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
             })
@@ -58,7 +58,7 @@ router.post('/sobremesa', async (req,res) => {
 
     
     const sobremesa = {
-        name, description, price, light
+        nome, descrição, preço, light
     }
     
     try {
@@ -123,9 +123,9 @@ router.put('/sobremesa/:id', async(req, res) => {
     
     const id = req.params.id
 
-    const { name, description, price, light} = req.body
+    const { nome, descrição, preço, light} = req.body
 
-    const sobremesa = {name, description, price, light}
+    const sobremesa = {nome, descrição, preço, light}
 
     try {
         const updatedSobremesa = await Sobremesa.updateOne({ _id: id }, sobremesa)

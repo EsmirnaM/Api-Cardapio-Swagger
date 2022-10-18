@@ -15,12 +15,12 @@ const Adicional = require('../models/Adicional')
 router.post('/pedido', async (req,res) => {
     // req.body
 
-    const {name, description, price, veggie, prato, bebida, sobremesa, adicional} = req.body
+    const {nome, descrição, preço, vegetariano, prato, bebida, sobremesa, adicional} = req.body
 
  
     
     const pedido = {
-        name, description, price, veggie, prato, bebida, sobremesa, adicional
+        nome, descrição, preço, vegetariano, prato, bebida, sobremesa, adicional
     }
     
     try {
@@ -121,9 +121,9 @@ router.put('/pedido/:id', async(req, res) => {
     
     const id = req.params.id
 
-    const { name, description, price, veggie } = req.body
+    const { nome, descrição, preço, vegetariano } = req.body
 
-    const pedido = {name, description, price, veggie}
+    const pedido = {nome, descrição, preço, vegetariano}
 
     try {
         const updatedPedido = await Pedido.updateOne({ _id: id }, pedido)

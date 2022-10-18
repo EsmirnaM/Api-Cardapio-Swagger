@@ -7,23 +7,23 @@ const Pedido = mongoose.model(
     new Schema({
 
         
-        name: {
+        nome: {
             type: String,
             required: true
         },
 
-        description: {
+        descrição: {
             type: String,
             required: true
         },
 
-        price: {
+        preço: {
             type: Number,
             required: true
         },
 
 
-        veggie: {
+        vegetariano: {
             type: Boolean,
             required: true,
         },

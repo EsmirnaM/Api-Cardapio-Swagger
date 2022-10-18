@@ -6,17 +6,17 @@ const {Schema} = mongoose
 const Sobremesa = mongoose.model(
     'Sobremesa',
     new Schema({
-        name:{
+        nome:{
             type: String,
             required: true
         },
 
-        description: {
+        descrição: {
             type: String,
             required: true
         },
 
-        price: {
+        preço: {
             type: Number,
             required: true
         }, 

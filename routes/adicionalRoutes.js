@@ -10,14 +10,14 @@ const Adicional = require('../models/Adicional')
 router.post('/adicional', async (req,res) => {
     // req.body
 
-    const {name, description, price, veggie} = req.body
+    const {nome, descrição, preço, vegetariano} = req.body
     console.log(req.body)
 
 
    
 
     const adicional = {
-        name, description, price, veggie, 
+        nome, descrição, preço, vegetariano, 
     }
     
     try {
@@ -28,23 +28,23 @@ router.post('/adicional', async (req,res) => {
 
     //validação caso esteja faltando inserir um dado
 
-        if(!name) {
+        if(!nome) {
             res.status(400).json({error:'É necessario informar o nome do adicional'})
             return
         }
     
-        if(!description) {
+        if(!descrição) {
             res.status(400).json({error:'É necessario informar a descrição do adicional'})
             return
         }
     
-        if(!price) {
+        if(!preço) {
             res.status(400).json({error:'É necessario informar o preço do adicional'})
             return
         }
         
-        if(veggie == "undefined") {
-            res.status(500).json({error:'É necessario informar se o adicional e veggie ou não'})
+        if(vegetariano == "undefined") {
+            res.status(500).json({error:'É necessario informar se o adicional e vegetariano ou não'})
             return
         }
 
@@ -53,7 +53,7 @@ router.post('/adicional', async (req,res) => {
 
  
         //nome
-        const nomeExiste = await Adicional.findOne ({name: name})
+        const nomeExiste = await Adicional.findOne ({nome: nome})
 
         if (nomeExiste){
             res.status(400).json({
@@ -63,9 +63,9 @@ router.post('/adicional', async (req,res) => {
         }
 
         //descrição
-        const descriptionExiste = await Adicional.findOne ({description: description})
+        const descriçãoExiste = await Adicional.findOne ({descrição: descrição})
 
-        if (descriptionExiste){
+        if (descriçãoExiste){
             res.status(400).json({
                 message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
             })
@@ -128,14 +128,14 @@ router.post('/adicional', async (req,res) => {
 })
 
 
-//-----------------------------------get pelo name----------------------------------------------
+//-----------------------------------get pelo nome----------------------------------------------
 
-router.get('/adicional/name/:name', async (req, res) => {
+router.get('/adicional/nome/:nome', async (req, res) => {
     
-    const {name} = req.params
+    const {nome} = req.params
     
     try {
-     const adicional = await Adicional.findOne({ name: name })
+     const adicional = await Adicional.findOne({ nome: nome })
      
      
         if(!adicional) {
@@ -161,9 +161,9 @@ router.put('/adicional/:id', async(req, res) => {
     
     const id = req.params.id
 
-    const { name, description, price, veggie} = req.body
+    const { nome, descrição, preço, vegetariano} = req.body
 
-    const adicional = {name, description, price, veggie}
+    const adicional = {nome, descrição, preço, vegetariano}
 
     try {
         const updatedAdicional = await Adicional.updateOne({ _id: id }, adicional)

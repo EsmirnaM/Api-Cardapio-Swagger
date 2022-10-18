@@ -9,13 +9,13 @@ const Bebida = require('../models/Bebida')
 router.post('/bebida', async (req,res) => {
     // req.body
 
-    const {name, description, price, alcohol} = req.body.id
+    const {nome, descrição, preço, álcool} = req.body.id
 
 
 
 
     const bebida = {
-        name, description, price, alcohol
+        nome, descrição, preço, álcool
     }
     
     try {
@@ -25,17 +25,17 @@ router.post('/bebida', async (req,res) => {
 
     //validação caso esteja faltando inserir um dado
 
-        if(!name) {
+        if(!nome) {
             res.status(400).json({error:'É necessario informar o nome da bebida'})
             return
         }
     
-        if(!description) {
+        if(!descrição) {
             res.status(400).json({error:'É necessario informar a descrição da bebida'})
             return
         }
     
-        if(!price) {
+        if(!preço) {
             res.status(400).json({error:'É necessario informar o preço da bebida'})
             return
         }
@@ -45,7 +45,7 @@ router.post('/bebida', async (req,res) => {
     //validação caso o dado informado já existe na base de dados
 
         //nome
-        const nomeExiste = await Bebida.findOne ({name: name})
+        const nomeExiste = await Bebida.findOne ({nome: nome})
 
         if (nomeExiste){
             res.status(400).json({
@@ -55,9 +55,9 @@ router.post('/bebida', async (req,res) => {
         }
 
         //descrição
-        const descriptionExiste = await Bebida.findOne ({description: description})
+        const descriçãoExiste = await Bebida.findOne ({descrição: descrição})
 
-        if (descriptionExiste){
+        if (descriçãoExiste){
             res.status(400).json({
                 message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
             })
@@ -114,13 +114,13 @@ router.post('/bebida', async (req,res) => {
 })
 
 
-//----------------------------------get pelo name--------------------------------------
-router.get('/bebida/name/:name', async (req, res) => {
+//----------------------------------get pelo nome--------------------------------------
+router.get('/bebida/nome/:nome', async (req, res) => {
     
-    const {name} = req.params
+    const {nome} = req.params
     
     try {
-     const bebida = await Bebida.findOne({ name: name })
+     const bebida = await Bebida.findOne({ nome: nome })
      
      
         if(!bebida) {
@@ -146,9 +146,9 @@ router.put('/bebida/:id', async(req, res) => {
     
     const id = req.params.id
 
-    const { name, description, price, alcohol} = req.body
+    const { nome, descrição, preço, álcool} = req.body
 
-    const bebida = {name, description, price, alcohol}
+    const bebida = {nome, descrição, preço, álcool}
 
     try {
         const updatedBebida = await Bebida.updateOne({ _id: id }, bebida)

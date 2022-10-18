@@ -9,7 +9,7 @@ const Cliente = require('../models/cliente')
 router.post('/cliente', async (req,res) => {
     // req.body
 
-    const {name, cpf, email, phone} = req.body
+    const {nome, cpf, email, telefone} = req.body
 
 
 
@@ -18,7 +18,7 @@ router.post('/cliente', async (req,res) => {
 
     //validação caso esteja faltando inserir um dado
 
-    if(!name) {
+    if(!nome) {
         res.status(400).json({error:'É necessario informar o seu nome'})
         return
     }
@@ -33,7 +33,7 @@ router.post('/cliente', async (req,res) => {
         return
     }
 
-    if(!phone) {
+    if(!telefone) {
         res.status(400).json({error:'É necessario informar o seu telefone'})
         return
     }
@@ -44,7 +44,7 @@ router.post('/cliente', async (req,res) => {
 
 
         //nome
-         const nomeExiste = await Cliente.findOne ({name: name})
+         const nomeExiste = await Cliente.findOne ({nome: nome})
 
          if (nomeExiste){
              res.status(400).json({
@@ -75,9 +75,9 @@ router.post('/cliente', async (req,res) => {
         }
 
         //telefone
-        const phoneExiste = await Cliente.findOne ({phone:phone})
+        const telefoneExiste = await Cliente.findOne ({telefone:telefone})
 
-        if (phoneExiste){
+        if (telefoneExiste){
             res.status(400).json({
                 message: 'O telefone informado já existe, por favor verifique os dados e tente novamente'
             })
@@ -89,7 +89,7 @@ router.post('/cliente', async (req,res) => {
     
     
     const cliente = {
-        name, cpf, email, phone
+        nome, cpf, email, telefone
     }
     
     try {
@@ -149,9 +149,9 @@ router.put('/cliente/:id', async(req, res) => {
     
     const id = req.params.id
 
-    const { name, cpf, email, phone} = req.body
+    const { nome, cpf, email, telefone} = req.body
 
-    const cliente = {name, cpf, email, phone}
+    const cliente = {nome, cpf, email, telefone}
 
     try {
         const updatedCliente = await Cliente.updateOne({ _id: id }, cliente)

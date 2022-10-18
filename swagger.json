@@ -28,12 +28,203 @@
                     "application/json":{
                         "schema":{
                           "$ref": "#/components/schemas/Adicional"
+                        },
+                        "examples": {
+                            "Adicional": {
+                                "value": {
+                                    "name":"feijoada",
+                                    "description" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
+                                    "price": 24,
+                                    "veggie": false
+                                }
+                            }
                         }
                     }
                 }
+            },
+            "responses": {
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "400":{
+                    "description": "Bad Request"
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
             }
         }
+    },
+    "/adicionais": {
+        "get":{
+           "description": "Buscar adicionais cadastrados",
+           "summary": "Buscar adicionais cadastrados",
+           "tags": ["Adicionais"],
+           "responses": {
+            "404": {
+                "description": "Not Found!"
+            },
+            "200":{
+                "description": "ok",
+                "content": {
+                    "application/json": {
+                        "scema": {
+                            "type": "object",
+                            "intens": {
+                                "$ref": "#/components/schemas/Adicional"
+                            }
+                        }
+                    }
+                }
+            },
+            "500":{
+                "description": "Internal Server Error"
+            }
+        }
+        
+        }
+    },
+    "/adicional/{id}": {
+        "get": {
+            "description": "Buscar adicionais cadastrados pelo id",
+            "summary": "Buscar adicionais cadastrados pelo id",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id do produto para busca",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "put": {
+            "description": "Alterar adicionais cadastrados pelo id",
+            "summary": "Alterar adicionais cadastrados pelo id",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id do produto para busca",
+                    "required": true
+                }
+            ],
+
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{
+                          "$ref": "#/components/schemas/Adicional"
+                        },
+                        "examples": {
+                            "Adicional": {
+                                "value": {
+                                    "name":"feijoada",
+                                    "description" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
+                                    "price": 25,
+                                    "veggie": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+    "/adicional/name/{name}": {
+        "get": {
+            "description": "Buscar adicionais cadastrados nome",
+            "summary": "Buscar adicionais cadastrados pelo nome",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "name",
+                    "in": "path",
+                    "description": "Nome do produto para busca",
+                    "required": true
+                }
+            ],
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+
     }
+
+
 },
 
 "components":{

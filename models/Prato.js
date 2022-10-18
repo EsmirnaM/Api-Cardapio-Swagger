@@ -5,26 +5,26 @@ const {Schema} = mongoose
 const Prato = mongoose.model(
     'Prato',
     new Schema({
-        name: {
+        nome: {
             type: String,
             required: true, 
             unique: true
             
         },
 
-        description: {
+        descrição: {
             type: String,
             required: true
         },
 
-        price: {
+        preço: {
             type: Number,
             required: true,
             
         },
 
 
-        veggie: {
+        vegetariano: {
             type: Boolean,
             required: true
             

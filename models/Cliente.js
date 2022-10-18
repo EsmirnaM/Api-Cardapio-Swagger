@@ -5,7 +5,7 @@ const {Schema} = mongoose
 const Cliente = mongoose.model(
     'Cliente',
     new Schema({
-        name: {
+        nome: {
             type: String,
             required: true, 
             unique: true
@@ -29,7 +29,7 @@ const Cliente = mongoose.model(
         },
 
 
-        phone: {
+        telefone: {
             type: Number,
             required: true
             
