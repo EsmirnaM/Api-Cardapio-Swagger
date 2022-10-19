@@ -28,7 +28,7 @@ router.post('/cliente', async (req,res) => {
 
 
 
-        //***1*/
+        // //***1*/
         if(!codigo && !nome && !sobrenome && !cpf && !email && !telefone){
         res.status(400).json({error:'É necessario informar codigo, nome, sobrenome, cpf, email e telefone '})
         return 
@@ -152,7 +152,22 @@ router.post('/cliente', async (req,res) => {
 
 //----------------validação caso o dado informado já existe na base de dados---------------------
 
-        //codigo
+        
+    //codigo e cpf
+    const codigo1Existe = await Cliente.findOne ({codigo: codigo})
+    const cpf1Existe = await Cliente.findOne ({cpf: cpf})
+
+    if (codigo1Existe && cpf1Existe){
+    res.status(400).json({
+        message: 'O código e o cpf informado já existe, por favor verifique os dados e tente novamente'
+    })
+    return
+    }
+
+
+
+
+    //codigo
         const codigoExiste = await Cliente.findOne ({codigo: codigo})
 
         if (codigoExiste){

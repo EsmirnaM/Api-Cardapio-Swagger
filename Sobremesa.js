@@ -21,7 +21,7 @@ const Sobremesa = mongoose.model(
         descrição: {
             type: String,
             required: true
-        }, 
+        },
 
         preço: {
             type: Number,

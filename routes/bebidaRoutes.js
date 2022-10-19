@@ -99,22 +99,22 @@ router.post('/bebida', async (req,res) => {
 
     //----------------validação caso o dado informado já existe na base de dados---------------------
 
+        //codigo
+        const codigoExiste = await Bebida.findOne ({codigo: codigo})
+
+        if (codigoExiste){
+            res.status(400).json({
+                message: 'O codigo informado já existe, por favor verifique os dados e tente novamente'
+            })
+            return
+        }
+
         //nome
         const nomeExiste = await Bebida.findOne ({nome: nome})
 
         if (nomeExiste){
             res.status(400).json({
                 message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
-            })
-            return
-        }
-
-        //descrição
-        const descriçãoExiste = await Bebida.findOne ({descrição: descrição})
-
-        if (descriçãoExiste){
-            res.status(400).json({
-                message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
             })
             return
         }

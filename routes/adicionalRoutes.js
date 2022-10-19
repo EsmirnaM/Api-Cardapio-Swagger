@@ -110,25 +110,7 @@ router.post('/adicional', async (req,res) => {
                     })
                     return
                 }
-        //nome
-            const nomeExiste = await Adicional.findOne ({nome: nome})
-
-                if (nomeExiste){
-                    res.status(400).json({
-                        message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
-                    })
-                    return
-                }
-
-        //descrição
-            const descriçãoExiste = await Adicional.findOne ({descrição: descrição})
-
-                if (descriçãoExiste){
-                    res.status(400).json({
-                        message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
-                    })
-                    return
-                }
+        
 
      
         await Adicional.create(adicional)
