@@ -100,14 +100,14 @@
     },
     "/adicional/{id}": {
         "get": {
-            "description": "Buscar adicionais cadastrados pelo id",
-            "summary": "Buscar adicionais cadastrados pelo id",
+            "description": "Buscar adicional cadastrado pelo id",
+            "summary": "Buscar adicional cadastrado pelo id",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "Id do produto para busca",
+                    "description": "Id do adicional para busca",
                     "required": true
                 }
             ],
@@ -135,14 +135,14 @@
             }
         },
         "put": {
-            "description": "Alterar adicionais cadastrados pelo id",
-            "summary": "Alterar adicionais cadastrados pelo id",
+            "description": "Alterar adicional cadastrado pelo id",
+            "summary": "Alterar adicional cadastrado pelo id",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "Id do produto que deseja atualizar",
+                    "description": "Id do adicional que deseja atualizar",
                     "required": true
                 }
             ],
@@ -191,14 +191,14 @@
             }
         },
         "delete": {
-            "description": "Excluir adicionais cadastrados pelo id",
-            "summary": "Excluir adicionais cadastrados pelo id",
+            "description": "Excluir adicional cadastrado pelo id",
+            "summary": "Excluir adicional cadastrado pelo id",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "Id do produto que deseja excluir",
+                    "description": "Id do adicional que deseja excluir",
                     "required": true
                 }
             ],
@@ -228,14 +228,14 @@
     },
     "/adicional/codigo/{codigo}": {
         "get": {
-            "description": "Buscar adicionais cadastrados pelo codigo",
-            "summary": "Buscar adicionais cadastrados pelo codigo",
+            "description": "Buscar adicional cadastrado pelo codigo",
+            "summary": "Buscar adicional cadastrado pelo codigo",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "codigo",
                     "in": "path",
-                    "description": "Codigo do produto para busca",
+                    "description": "Codigo do adicional para busca",
                     "required": true
                 }
             ],
@@ -263,14 +263,14 @@
             }
         },
         "put": {
-            "description": "Alterar adicionais cadastrados pelo codigo",
-            "summary": "Alterar adicionais cadastrados pelo codigo",
+            "description": "Alterar adicional cadastrado pelo codigo",
+            "summary": "Alterar adicional cadastrado pelo codigo",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "codigo",
                     "in": "path",
-                    "description": "codigo do produto que deseja atualizar",
+                    "description": "codigo do adicional que deseja atualizar",
                     "required": true
                 }
             ],
@@ -319,14 +319,14 @@
             }
         },
         "delete": {
-            "description": "Excluir adicionais cadastrados pelo codigo",
-            "summary": "Excluir adicionais cadastrados pelo codigo",
+            "description": "Excluir adicional cadastrado pelo codigo",
+            "summary": "Excluir adicional cadastrado pelo codigo",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "codigo",
                     "in": "path",
-                    "description": "codigo do produto que deseja excluir",
+                    "description": "codigo do adicional que deseja excluir",
                     "required": true
                 }
             ],
@@ -363,8 +363,8 @@
     "/bebida": {
         "post": {
             "summary": "Cadastrar Bebida",
-            "description": "Rota para cadastrar um novo Bebida",
-            "tags": ["Bebida"],
+            "description": "Rota para cadastrar uma nova Bebida",
+            "tags": ["Bebidas"],
             "requestBody": {
                 "content": {
                     "application/json":{
@@ -416,7 +416,7 @@
         "get":{
            "description": "Buscar Bebidas cadastradas",
            "summary": "Buscar Bebidas cadastradas",
-           "tags": ["Bebida"],
+           "tags": ["Bebidas"],
            "responses": {
             "404": {
                 "description": "Not Found!"
@@ -443,14 +443,356 @@
     },
     "/bebida/{id}": {
         "get": {
-            "description": "Buscar Bebida cadastrados pelo id",
-            "summary": "Buscar adicionais cadastrados pelo id",
+            "description": "Buscar Bebida cadastrada pelo id",
+            "summary": "Buscar Bebida cadastrada pelo id",
+            "tags": ["Bebidas"],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id da bebida para busca",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Bebida"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "put": {
+            "description": "Alterar Bebida cadastrada pelo id",
+            "summary": "Alterar Bebida cadastrada pelo id",
+            "tags": ["Bebidas"],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id da bebida que deseja atualizar",
+                    "required": true
+                }
+            ],
+
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{
+                          "$ref": "#/components/schemas/Bebida"
+                        },
+                        "examples": {
+                            "Adicional": {
+                                "value": {
+                                    "codigo": 2,
+                                    "nome":"Suco natural de limão",
+                                    "descrição" : "Polpa de limao, agua, azucar, contém, 300 ml",
+                                    "preço": 6,
+                                    "álcool": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            "responses": {
+                "404": {
+                    "description": "Not Found"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Bebida"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "delete": {
+            "description": "Excluir Bebida cadastrada pelo id",
+            "summary": "Excluir Bebida cadastrada pelo id",
+            "tags": ["Bebidas"],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id da bebida que deseja excluir",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Bebida"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+    "/bebida/codigo/{codigo}": {
+        "get": {
+            "description": "Buscar Bebida cadastrada pelo codigo",
+            "summary": "Buscar Bebida cadastrada pelo codigo",
+            "tags": ["Bebidas"],
+            "parameters": [
+                {
+                    "name": "codigo",
+                    "in": "path",
+                    "description": "Codigo da bebida para busca",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Bebida"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "put": {
+            "description": "Alterar Bebida cadastrada pelo codigo",
+            "summary": "Alterar Bebida cadastrada pelo codigo",
+            "tags": ["Bebidas"],
+            "parameters": [
+                {
+                    "name": "codigo",
+                    "in": "path",
+                    "description": "codigo da bebida que deseja atualizar",
+                    "required": true
+                }
+            ],
+
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{
+                          "$ref": "#/components/schemas/Bebida"
+                        },
+                        "examples": {
+                            "Adicional": {
+                                "value": {
+                                    "codigo": 2,
+                                    "nome":"Suco natural de limão",
+                                    "descrição" : "Polpa de limao, agua, azucar, contém, 300 ml",
+                                    "preço": 6,
+                                    "álcool": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            "responses": {
+                "404": {
+                    "description": "Not Found"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "delete": {
+            "description": "Excluir bebida cadastrada pelo codigo",
+            "summary": "Excluir bebida cadastrada pelo codigo",
+            "tags": ["Bebidas"],
+            "parameters": [
+                {
+                    "name": "codigo",
+                    "in": "path",
+                    "description": "codigo doa bebida que deseja excluir",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Bebida"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+
+    
+
+
+
+
+    "/prato": {
+        "post": {
+            "summary": "Cadastrar Adicional",
+            "description": "Rota para cadastrar um novo adicional",
+            "tags": ["Adicionais"],
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{
+                          "$ref": "#/components/schemas/Adicional"
+                        },
+                        "examples": {
+                            "Adicional": {
+                                "value": {
+                                    "codigo": 1,
+                                    "nome":"Salada de Alface",
+                                    "descrição" : "Alface, Cebola, Tomate e Vinagre",
+                                    "preço": 8,
+                                    "vegetariano": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "400":{
+                    "description": "Bad Request"
+                },
+                "404":{
+                    "description": "Not found"
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+    "/adicionais": {
+        "get":{
+           "description": "Buscar adicionais cadastrados",
+           "summary": "Buscar adicionais cadastrados",
+           "tags": ["Adicionais"],
+           "responses": {
+            "404": {
+                "description": "Not Found!"
+            },
+            "200":{
+                "description": "ok",
+                "content": {
+                    "application/json": {
+                        "scema": {
+                            "type": "object",
+                            "intens": {
+                                "$ref": "#/components/schemas/Adicional"
+                            }
+                        }
+                    }
+                }
+            },
+            "500":{
+                "description": "Internal Server Error"
+            }
+        }
+        
+        }
+    },
+    "/adicional/{id}": {
+        "get": {
+            "description": "Buscar adicional cadastrado pelo id",
+            "summary": "Buscar adicional cadastrado pelo id",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "Id do produto para busca",
+                    "description": "Id do adicional para busca",
                     "required": true
                 }
             ],
@@ -478,14 +820,14 @@
             }
         },
         "put": {
-            "description": "Alterar adicionais cadastrados pelo id",
-            "summary": "Alterar adicionais cadastrados pelo id",
+            "description": "Alterar adicional cadastrado pelo id",
+            "summary": "Alterar adicional cadastrado pelo id",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "Id do produto que deseja atualizar",
+                    "description": "Id do adicional que deseja atualizar",
                     "required": true
                 }
             ],
@@ -534,14 +876,14 @@
             }
         },
         "delete": {
-            "description": "Excluir adicionais cadastrados pelo id",
-            "summary": "Excluir adicionais cadastrados pelo id",
+            "description": "Excluir adicional cadastrado pelo id",
+            "summary": "Excluir adicional cadastrado pelo id",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "Id do produto que deseja excluir",
+                    "description": "Id do adicional que deseja excluir",
                     "required": true
                 }
             ],
@@ -569,16 +911,16 @@
             }
         }
     },
-    "/bebida/codigo/{codigo}": {
+    "/adicional/codigo/{codigo}": {
         "get": {
-            "description": "Buscar adicionais cadastrados pelo codigo",
-            "summary": "Buscar adicionais cadastrados pelo codigo",
+            "description": "Buscar adicional cadastrado pelo codigo",
+            "summary": "Buscar adicional cadastrado pelo codigo",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "codigo",
                     "in": "path",
-                    "description": "Codigo do produto para busca",
+                    "description": "Codigo do adicional para busca",
                     "required": true
                 }
             ],
@@ -606,14 +948,14 @@
             }
         },
         "put": {
-            "description": "Alterar adicionais cadastrados pelo codigo",
-            "summary": "Alterar adicionais cadastrados pelo codigo",
+            "description": "Alterar adicional cadastrado pelo codigo",
+            "summary": "Alterar adicional cadastrado pelo codigo",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "codigo",
                     "in": "path",
-                    "description": "codigo do produto que deseja atualizar",
+                    "description": "codigo do adicional que deseja atualizar",
                     "required": true
                 }
             ],
@@ -662,14 +1004,14 @@
             }
         },
         "delete": {
-            "description": "Excluir adicionais cadastrados pelo codigo",
-            "summary": "Excluir adicionais cadastrados pelo codigo",
+            "description": "Excluir adicional cadastrado pelo codigo",
+            "summary": "Excluir adicional cadastrado pelo codigo",
             "tags": ["Adicionais"],
             "parameters": [
                 {
                     "name": "codigo",
                     "in": "path",
-                    "description": "codigo do produto que deseja excluir",
+                    "description": "codigo do adicional que deseja excluir",
                     "required": true
                 }
             ],
@@ -696,7 +1038,7 @@
                 }
             }
         }
-    }
+    },
 
 
 
