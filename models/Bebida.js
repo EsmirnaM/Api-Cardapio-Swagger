@@ -6,6 +6,14 @@ const {Schema} = mongoose
 const Bebida = mongoose.model(
     'Bebida',
     new Schema({
+
+        codigo:{
+            type: Number,
+            required: true,
+            unique: true
+        },
+
+        
         nome:{
             type: String,
             required: true

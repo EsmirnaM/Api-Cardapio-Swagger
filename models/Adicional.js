@@ -6,6 +6,13 @@ const {Schema} = mongoose
 const Adicional = mongoose.model(
     'Adicional',
     new Schema({
+
+        codigo:{
+            type: Number,
+            required: true,
+            unique: true
+        },
+
         nome:{
             type: String,
             required: true

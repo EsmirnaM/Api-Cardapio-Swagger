@@ -6,6 +6,7 @@ const Prato = require('../models/Prato')
 const Bebida = require('../models/Bebida')
 const Sobremesa = require('../models/Sobremesa')
 const Adicional = require('../models/Adicional')
+const Cliente = require('../models/Cliente')
 
 
 
@@ -15,15 +16,31 @@ const Adicional = require('../models/Adicional')
 router.post('/pedido', async (req,res) => {
     // req.body
 
-    const {nome, descrição, preço, vegetariano, prato, bebida, sobremesa, adicional} = req.body
+    const {codigo, nome, cliente, preço, prato, bebida, sobremesa, adicional} = req.body
 
  
     
     const pedido = {
-        nome, descrição, preço, vegetariano, prato, bebida, sobremesa, adicional
+        codigo, nome, cliente, preço, prato, bebida, sobremesa, adicional
     }
     
     try {
+
+
+
+ //--------------------------------------------validações---------------------------------------------      
+
+
+
+//validação cliente
+        const cliente1 = await Cliente.findOne({ _id: cliente })
+        
+    
+        if(!cliente1) {
+            res.status(404).json({ message: 'a id informada não existe, porfavor verifique os dados inseridos e tente novamente'})
+            return
+        }
+
 //validação prato
         const prato1 = await Prato.findOne({ _id: prato })
         
@@ -77,6 +94,8 @@ router.post('/pedido', async (req,res) => {
     
     })
 
+//-----------------------------------------Requisições--------------------------------------------
+
 
      //-----------------------------------------Get---------------------------------------------
      router.get('/pedido', async (req, res) => {
@@ -115,15 +134,45 @@ router.post('/pedido', async (req,res) => {
    }
 })
 
-//-------------------------------------------atualização de dados-------------------------------------
+
+//-------------------------------------------------get pelo código-------------------------------------------------------------
+
+router.get('/pedido/codigo/:codigo', async (req, res) => {
+    
+    const {codigo} = req.params
+    
+    try {
+     const pedido = await Pedido.findOne({codigo})
+     
+     
+        if(!pedido) {
+            res.status(404).json({ message: 'O pedido informado não existe, porfavor verifique os dados inseridos e tente novamente'})
+            return
+        }
+
+
+        else{
+        res.status(200).json(pedido)
+        }
+
+
+    } catch (error) {
+     res.status(500).json({ error: error})
+    }
+ })
+ 
+
+ 
+
+//----------------------------------atualização de dados pelo id---------------------------------
 
 router.put('/pedido/:id', async(req, res) => {
     
     const id = req.params.id
 
-    const { nome, descrição, preço, vegetariano } = req.body
+    const { codigo, nome, cliente, preço, prato, bebida, sobremesa, adicional} = req.body
 
-    const pedido = {nome, descrição, preço, vegetariano}
+    const pedido = {codigo, nome, cliente, preço, prato, bebida, sobremesa, adicional}
 
     try {
         const updatedPedido = await Pedido.updateOne({ _id: id }, pedido)
@@ -141,8 +190,36 @@ router.put('/pedido/:id', async(req, res) => {
  
 })
 
+//---------------------------------atualização de dados chamando pelo codigo---------------------------------------------------
 
-//----------------------------------------------Delete-----------------------------------
+router.put('/pedido/codigo/:codigo', async(req, res) => {
+    
+    const {codigo} = req.params
+
+    const {nome, cliente, preço, prato, bebida, sobremesa, adicional} = req.body
+
+    const pedido = {codigo, nome, cliente, preço, prato, bebida, sobremesa, adicional}
+
+    try {
+        const updatedPedido = await Pedido.updateOne({ codigo }, pedido)
+        
+        if(updatedPedido.matchedCount === 0) {
+         res.status(404).json({ message: "Pedido informado não existe, porfavor verifique os dados inseridos e tente novamente"})   
+         return
+        }
+
+        res.status(200).json ({ message: 'Pedido atualizado com sucesso'})
+
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+ 
+})
+
+
+
+
+//----------------------------------------------Delete pelo id-----------------------------------
 
 
 router.delete('/pedido/:id', async (req, res) => {
@@ -167,6 +244,34 @@ router.delete('/pedido/:id', async (req, res) => {
     }
 
 })
+
+//------------------------------------------Delete pelo codigo-------------------------------------------------------------------
+
+
+router.delete('/pedido/codigo/:codigo', async (req, res) => {
+
+    const {codigo} = req.params
+
+    const pedido = await Pedido.findOne({ codigo })
+    
+    if(!pedido) {
+        res.status(404).json({ message: 'Pedido informado não existe, porfavor verifique os dados inseridos e tente novamente'})
+        return
+    }
+
+    try {
+
+        await Pedido.deleteOne({ codigo })
+
+        res.status(200).json ({ message: 'Pedido excluido com sucesso'})
+        
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+
+})
+
+
 
 
 

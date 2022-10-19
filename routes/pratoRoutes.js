@@ -12,11 +12,11 @@ const Prato = require('../models/Prato')
 router.post('/prato', async (req,res) => {
     // req.body
 
-    const {nome, descrição, preço, vegetariano} = req.body
+    const {codigo, nome, descrição, preço, vegetariano} = req.body
     
 
     const prato = {
-        nome, descrição, preço, vegetariano, 
+        codigo,nome, descrição, preço, vegetariano, 
     }
 
     try {
@@ -99,28 +99,17 @@ router.post('/prato', async (req,res) => {
 
     //----------------validação caso o dado informado já existe na base de dados---------------------
 
-        //nome
-        const nomeExiste = await Prato.findOne ({nome: nome})
+        //codigo
+        const codigoExiste = await Prato.findOne ({codigo: codigo})
 
-        if (nomeExiste){
+        if (codigoExiste){
             res.status(400).json({
-                message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
+                message: 'o codigo informado já existe, por favor verifique os dados e tente novamente'
             })
             return
         }
 
-        //descrição
-        const descriçãoExiste = await Prato.findOne ({descrição: descrição})
-
-        if (descriçãoExiste){
-            res.status(400).json({
-                message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
-            })
-            return
-        }
-
-
-        
+  
      
         await Prato.create(prato)
     
@@ -177,15 +166,14 @@ router.post('/prato', async (req,res) => {
 })
 
 
-//---------------------------------------get pelo nome--------------------------------------
+//-------------------------------------------------get pelo código-------------------------------------------------------------
 
-
-router.get('/prato/nome/:nome', async (req, res) => {
+router.get('/prato/codigo/:codigo', async (req, res) => {
     
-    const {nome} = req.params
+    const {codigo} = req.params
     
     try {
-     const prato = await Prato.findOne({ nome: nome })
+     const prato = await Prato.findOne({codigo})
      
      
         if(!prato) {
@@ -205,7 +193,9 @@ router.get('/prato/nome/:nome', async (req, res) => {
  })
  
 
-//-------------------------------------atualização de dados----------------------------------------------
+ 
+
+//-------------------------------------atualização de dados pelo id----------------------------------------------
 
 
 
@@ -222,6 +212,32 @@ router.put('/prato/:id', async(req, res) => {
         
         if(updatedPrato.matchedCount === 0) {
          res.status(404).json({ message: "O prato informado não existe, porfavor verifique os dados inseridos e tente novamente"})   
+         return
+        }
+
+        res.status(200).json ({ message: 'Prato atualizado com sucesso'})
+
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+ 
+})
+
+//---------------------------------atualização de dados chamando pelo codigo---------------------------------------------------
+
+router.put('/prato/codigo/:codigo', async(req, res) => {
+    
+    const {codigo} = req.params
+
+    const { nome, descrição, preço, vegetariano} = req.body
+
+    const prato = {nome, descrição, preço, vegetariano}
+
+    try {
+        const updatedPrato = await Prato.updateOne({ codigo }, prato)
+        
+        if(updatedPrato.matchedCount === 0) {
+         res.status(404).json({ message: "Prato informado não existe, porfavor verifique os dados inseridos e tente novamente"})   
          return
         }
 
@@ -261,6 +277,34 @@ router.delete('/prato/:id', async (req, res) => {
     }
 
 })
+
+//------------------------------------------Delete pelo codigo-------------------------------------------------------------------
+
+
+router.delete('/prato/codigo/:codigo', async (req, res) => {
+
+    const {codigo} = req.params
+
+    const prato = await Prato.findOne({ codigo })
+    
+    if(!prato) {
+        res.status(404).json({ message: 'Prato informado não existe, porfavor verifique os dados inseridos e tente novamente'})
+        return
+    }
+
+    try {
+
+        await Prato.deleteOne({ codigo })
+
+        res.status(200).json ({ message: 'Prato excluido com sucesso'})
+        
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+
+})
+
+
 
 
 

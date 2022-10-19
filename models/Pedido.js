@@ -5,14 +5,14 @@ const Schema = mongoose.Schema;
 const Pedido = mongoose.model(
     'Pedido',
     new Schema({
-
+        
+        codigo:{
+            type: Number,
+            required: true,
+            unique: true
+        },
         
         nome: {
-            type: String,
-            required: true
-        },
-
-        descrição: {
             type: String,
             required: true
         },
@@ -22,11 +22,6 @@ const Pedido = mongoose.model(
             required: true
         },
 
-
-        vegetariano: {
-            type: Boolean,
-            required: true,
-        },
 
         cliente: {
             type: Schema.ObjectId,

@@ -6,6 +6,13 @@ const {Schema} = mongoose
 const Sobremesa = mongoose.model(
     'Sobremesa',
     new Schema({
+
+        codigo:{
+            type: Number,
+            required: true,
+            unique: true
+        },
+
         nome:{
             type: String,
             required: true

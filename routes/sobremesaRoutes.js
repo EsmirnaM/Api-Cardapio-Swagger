@@ -4,64 +4,115 @@ const { application } = require('express')
 const Sobremesa = require('../models/Sobremesa')
 
 
-//-------------------------------------------Post----------------------------------------------------
+
+
+
+//-----------------------------------------------Post-------------------------------------------
 
 router.post('/sobremesa', async (req,res) => {
     // req.body
 
-    const {nome, descrição, preço, light} = req.body
-
+    const {codigo, nome, descrição, preço, light} = req.body
     
-//-----------------------------------------validações-----------------------------------------
+
+    const sobremesa = {
+        codigo, nome, descrição, preço, light, 
+    }
+
+    try {
+
+    //-----------------------------------------validações-----------------------------------------
 
 
-//--------------------------validação caso esteja faltando inserir um dado-----------------------
+    //-----------------------validação caso esteja faltando inserir um dado-----------------------    
+
+        if(!nome && !descrição && !preço && !light){
+        res.status(400).json({error:'É necessario informar nome, descrição, preço e se a sobremesa é ou não light'})
+        return 
+        }
+
+        if(!nome && !descrição && !preço){
+            res.status(400).json({error:'É necessario informar nome, descrição e o preço da sobremesa'})
+            return 
+            }
     
-    if(!nome) {
-        res.status(400).json({error:'É necessario informar o nome da sobremesa'})
-        return
-    }
+        if(!nome && !descrição && !light){
+            res.status(400).json({error:'É necessario informar nome, descrição e se oa sobremesa é ou não light'})
+            return 
+            }
 
-    if(!descrição) {
-        res.status(400).json({error:'É necessario informar a descrição da sobremesa'})
-        return
-    }
+        if(!nome && !preço && !light){
+            res.status(400).json({error:'É necessario informar nome, preço e se a sobremesa é ou não light'})
+            return 
+            }
 
-    if(!preço) {
-        res.status(400).json({error:'É necessario informar o preço da sobremesa'})
-        return
-    }
+        if(!descrição && !preço && !light){
+            res.status(400).json({error:'É necessario informar preço, descrição, preço e se a sobremesa é ou não light'})
+            return 
+            }
+
+        if(!nome && !descrição ) {
+            res.status(400).json({error:'É necessario informar o nome e a descrição da sobremesa'})
+            return
+            }
+
+        if(!nome && !preço ) {
+            res.status(400).json({error:'É necessario informar o nome e o preço da sobremsa'})
+            return
+            }
+
+        if(!nome && !light ) {
+            res.status(400).json({error:'É necessario informar o nome e se a sobremesa é light'})
+            return
+            }
+
+        if(!descrição && !light ) {
+            res.status(400).json({error:'É necessario informar a descrição e se a sobremesa é light'})
+            return
+            }
+        
+
+        if(!nome) {
+            res.status(400).json({error:'É necessario informar o nome da sobremesa'})
+            return
+        }
+
+        
+    
+        if(!descrição) {
+            res.status(400).json({error:'É necessario informar a descrição da sboremesa'})
+            return
+        }
+    
+        if(!preço) {
+            res.status(400).json({error:'É necessario informar o preço da sobremesa'})
+            return
+        }
+
+        
+    
+        if(light == undefined) {
+            res.status(500).json({error:'É necessario informar se a sobremesa é light ou não'})
+            return
+        }
+
 
     //----------------validação caso o dado informado já existe na base de dados---------------------
 
-        //nome
-        const nomeExiste = await Sobremesa.findOne ({nome: nome})
+       
 
-        if (nomeExiste){
+        //codigo
+        const codigoExiste = await Sobremesa.findOne ({codigo: codigo})
+
+        if (codigoExiste){
             res.status(400).json({
-                message: 'O nome informado já existe, por favor verifique os dados e tente novamente'
-            })
-            return
-        }
-
-        //descrição
-        const descriçãoExiste = await Sobremesa.findOne ({descrição: descrição})
-
-        if (descriçãoExiste){
-            res.status(400).json({
-                message: 'A descrição informada já existe, por favor verifique os dados e tente novamente'
+                message: 'o codigo informado já existe, por favor verifique os dados e tente novamente'
             })
             return
         }
 
 
-
-    
-    const sobremesa = {
-        nome, descrição, preço, light
-    }
-    
-    try {
+        
      
         await Sobremesa.create(sobremesa)
     
@@ -70,13 +121,17 @@ router.post('/sobremesa', async (req,res) => {
     } catch (error) {
         res.status(500).json({ error: error })
     }
+
+
+
     
     })
 
 
-    //---------------------------------------------Get---------------------------------------
-   
-   
+    
+
+
+    //-------------------------------------------Get---------------------------------------------
    
     router.get('/sobremesas', async (req, res) => {
     try {
@@ -92,8 +147,7 @@ router.post('/sobremesa', async (req,res) => {
    })
 
 
-   //----------------------------------------get por id----------------------------------------
-
+   //------------------------------------get por id----------------------------------------
 
    router.get('/sobremesa/:id', async (req, res) => {
     
@@ -115,7 +169,37 @@ router.post('/sobremesa', async (req,res) => {
    }
 })
 
-//--------------------------------------atualização de dados----------------------------------------
+
+//-------------------------------------------------get pelo código-------------------------------------------------------------
+
+router.get('/sobremesa/codigo/:codigo', async (req, res) => {
+    
+    const {codigo} = req.params
+    
+    try {
+     const sobremesa = await Sobremesa.findOne({codigo})
+     
+     
+        if(!sobremesa) {
+            res.status(404).json({ message: 'A sobremesa informada não existe, porfavor verifique os dados inseridos e tente novamente'})
+            return
+        }
+
+
+        else{
+        res.status(200).json(sobremesa)
+        }
+
+
+    } catch (error) {
+     res.status(500).json({ error: error})
+    }
+ })
+ 
+
+ 
+
+//-------------------------------------atualização de dados pelo id----------------------------------------------
 
 
 
@@ -123,7 +207,7 @@ router.put('/sobremesa/:id', async(req, res) => {
     
     const id = req.params.id
 
-    const { nome, descrição, preço, light} = req.body
+    const { nome, descrição, preço, light } = req.body
 
     const sobremesa = {nome, descrição, preço, light}
 
@@ -143,8 +227,34 @@ router.put('/sobremesa/:id', async(req, res) => {
  
 })
 
+//---------------------------------atualização de dados chamando pelo codigo---------------------------------------------------
 
-//------------------------------------------------Delete--------------------------------------------
+router.put('/sobremesa/codigo/:codigo', async(req, res) => {
+    
+    const {codigo} = req.params
+
+    const { nome, descrição, preço, light} = req.body
+
+    const sobremesa= {nome, descrição, preço, light}
+
+    try {
+        const updatedSobremesa = await Sobremesa.updateOne({ codigo }, sobremesa)
+        
+        if(updatedSobremesa.matchedCount === 0) {
+         res.status(404).json({ message: "Sobremesa informada não existe, porfavor verifique os dados inseridos e tente novamente"})   
+         return
+        }
+
+        res.status(200).json ({ message: 'Sobremesa atualizado com sucesso'})
+
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+ 
+})
+
+
+//---------------------------------------------Delete-------------------------------------------
 
 
 router.delete('/sobremesa/:id', async (req, res) => {
@@ -153,10 +263,12 @@ router.delete('/sobremesa/:id', async (req, res) => {
 
     const sobremesa = await Sobremesa.findOne({ _id: id })
     
-    if(!sobremesa) {
-        res.status(404).json({ message: 'A sobremesa informado não existe, porfavor verifique os dados inseridos e tente novamente'})
+    if(!sobremesa  ) {
+        res.status(404).json({ message: 'A sobremesa informada não existe, porfavor verifique os dados inseridos e tente novamente'})
         return
     }
+
+
 
     try {
 
@@ -169,6 +281,34 @@ router.delete('/sobremesa/:id', async (req, res) => {
     }
 
 })
+
+//------------------------------------------Delete pelo codigo-------------------------------------------------------------------
+
+
+router.delete('/sobremesa/codigo/:codigo', async (req, res) => {
+
+    const {codigo} = req.params
+
+    const sobremesa = await Sobremesa.findOne({ codigo })
+    
+    if(!sobremesa) {
+        res.status(404).json({ message: 'Sobremesa informada não existe, porfavor verifique os dados inseridos e tente novamente'})
+        return
+    }
+
+    try {
+
+        await Sobremesa.deleteOne({ codigo })
+
+        res.status(200).json ({ message: 'Sobremesa excluida com sucesso'})
+        
+    } catch (error) {
+        res.status(500).json({ error: error })
+    }
+
+})
+
+
 
 
 

@@ -5,15 +5,30 @@ const {Schema} = mongoose
 const Cliente = mongoose.model(
     'Cliente',
     new Schema({
+
+        codigo:{
+            type: Number,
+            required: true,
+            unique: true
+            
+        },
+        
         nome: {
             type: String,
             required: true, 
-            unique: true
+         
+        },
+
+        sobrenome: {
+            type: String,
+            required: true, 
+           
         },
 
         cpf: {
             type: Number,
-            required: true
+            required: true,
+            unique: true
         },
 
         email: {

@@ -59,6 +59,9 @@
                 "400":{
                     "description": "Bad Request"
                 },
+                "404":{
+                    "description": "Not found"
+                },
                 "500":{
                     "description": "Internal Server Error"
                 }
@@ -165,7 +168,7 @@
 
             "responses": {
                 "404": {
-                    "description": "Not Found!"
+                    "description": "Not Found"
                 },
                 "200":{
                     "description": "ok",
@@ -232,19 +235,19 @@
         "Adicional":{
                 "type": "object",
                 "properties": {
-                    "name":{
+                    "nome":{
                         "type": "string"
                     },
-                    "description": {
+                    "descrição": {
                         "type": "String"
                         
                     },
 
-                   "price": {
+                   "preço": {
                         "type": "number"
                     },
 
-                    "veggie": {
+                    "vegetariano": {
                         "type": "boolean"
                 
                     }

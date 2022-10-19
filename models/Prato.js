@@ -5,6 +5,13 @@ const {Schema} = mongoose
 const Prato = mongoose.model(
     'Prato',
     new Schema({
+        
+        codigo:{
+            type: Number,
+            required: true,
+            unique: true
+        },
+
         nome: {
             type: String,
             required: true, 
