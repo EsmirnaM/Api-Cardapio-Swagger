@@ -33,10 +33,10 @@
                             "Adicional": {
                                 "value": {
                                     "codigo": 1,
-                                    "nome":"feijoada",
-                                    "descrição" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
-                                    "preço": 24,
-                                    "vegetariano": false
+                                    "nome":"Salada de Alface",
+                                    "descrição" : "Alface, Cebola, Tomate e Vinagre",
+                                    "preço": 8,
+                                    "vegetariano": true
                                 }
                             }
                         }
@@ -142,7 +142,7 @@
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "Id do produto para busca",
+                    "description": "Id do produto que deseja atualizar",
                     "required": true
                 }
             ],
@@ -226,7 +226,7 @@
             }
         }
     },
-    "/adicional/codigo/:codigo": {
+    "/adicional/codigo/{codigo}": {
         "get": {
             "description": "Buscar adicionais cadastrados pelo codigo",
             "summary": "Buscar adicionais cadastrados pelo codigo",
@@ -235,10 +235,102 @@
                 {
                     "name": "codigo",
                     "in": "path",
-                    "description": "codigo do produto para busca",
+                    "description": "Codigo do produto para busca",
                     "required": true
                 }
             ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "put": {
+            "description": "Alterar adicionais cadastrados pelo codigo",
+            "summary": "Alterar adicionais cadastrados pelo codigo",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "codigo",
+                    "in": "path",
+                    "description": "codigo do produto que deseja atualizar",
+                    "required": true
+                }
+            ],
+
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{
+                          "$ref": "#/components/schemas/Adicional"
+                        },
+                        "examples": {
+                            "Adicional": {
+                                "value": {
+                                    "codigo": 1,
+                                    "nome":"feijoada",
+                                    "descrição" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
+                                    "preço": 24,
+                                    "vegetariano": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            "responses": {
+                "404": {
+                    "description": "Not Found"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "delete": {
+            "description": "Excluir adicionais cadastrados pelo codigo",
+            "summary": "Excluir adicionais cadastrados pelo codigo",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "codigo",
+                    "in": "path",
+                    "description": "codigo do produto que deseja excluir",
+                    "required": true
+                }
+            ],
+            
             "responses": {
                 "404": {
                     "description": "Not Found!"
@@ -261,8 +353,356 @@
                 }
             }
         }
+    },
 
+
+
+
+
+
+    "/bebida": {
+        "post": {
+            "summary": "Cadastrar Bebida",
+            "description": "Rota para cadastrar um novo Bebida",
+            "tags": ["Bebida"],
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{
+                          "$ref": "#/components/schemas/Bebida"
+                        },
+                        "examples": {
+                            "Bebida": {
+                                "value": {
+                                    "codigo": 2,
+                                    "nome":"Suco natural de limão",
+                                    "descrição" : "Polpa de limao, agua, azucar, contém, 300 ml",
+                                    "preço": 6,
+                                    "álcool": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Bebida"
+                                }
+                            }
+                        }
+                    }
+                },
+                "400":{
+                    "description": "Bad Request"
+                },
+                "404":{
+                    "description": "Not found"
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+    
+    "/bebidas": {
+        "get":{
+           "description": "Buscar Bebidas cadastradas",
+           "summary": "Buscar Bebidas cadastradas",
+           "tags": ["Bebida"],
+           "responses": {
+            "404": {
+                "description": "Not Found!"
+            },
+            "200":{
+                "description": "ok",
+                "content": {
+                    "application/json": {
+                        "scema": {
+                            "type": "object",
+                            "intens": {
+                                "$ref": "#/components/schemas/Bebida"
+                            }
+                        }
+                    }
+                }
+            },
+            "500":{
+                "description": "Internal Server Error"
+            }
+        }
+        
+        }
+    },
+    "/bebida/{id}": {
+        "get": {
+            "description": "Buscar Bebida cadastrados pelo id",
+            "summary": "Buscar adicionais cadastrados pelo id",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id do produto para busca",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "put": {
+            "description": "Alterar adicionais cadastrados pelo id",
+            "summary": "Alterar adicionais cadastrados pelo id",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id do produto que deseja atualizar",
+                    "required": true
+                }
+            ],
+
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{
+                          "$ref": "#/components/schemas/Adicional"
+                        },
+                        "examples": {
+                            "Adicional": {
+                                "value": {
+                                    "codigo": 1,
+                                    "nome":"feijoada",
+                                    "descrição" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
+                                    "preço": 24,
+                                    "vegetariano": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            "responses": {
+                "404": {
+                    "description": "Not Found"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "delete": {
+            "description": "Excluir adicionais cadastrados pelo id",
+            "summary": "Excluir adicionais cadastrados pelo id",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Id do produto que deseja excluir",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+    "/bebida/codigo/{codigo}": {
+        "get": {
+            "description": "Buscar adicionais cadastrados pelo codigo",
+            "summary": "Buscar adicionais cadastrados pelo codigo",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "codigo",
+                    "in": "path",
+                    "description": "Codigo do produto para busca",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "put": {
+            "description": "Alterar adicionais cadastrados pelo codigo",
+            "summary": "Alterar adicionais cadastrados pelo codigo",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "codigo",
+                    "in": "path",
+                    "description": "codigo do produto que deseja atualizar",
+                    "required": true
+                }
+            ],
+
+            "requestBody": {
+                "content": {
+                    "application/json":{
+                        "schema":{
+                          "$ref": "#/components/schemas/Adicional"
+                        },
+                        "examples": {
+                            "Adicional": {
+                                "value": {
+                                    "codigo": 1,
+                                    "nome":"feijoada",
+                                    "descrição" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
+                                    "preço": 24,
+                                    "vegetariano": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            "responses": {
+                "404": {
+                    "description": "Not Found"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        },
+        "delete": {
+            "description": "Excluir adicionais cadastrados pelo codigo",
+            "summary": "Excluir adicionais cadastrados pelo codigo",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "codigo",
+                    "in": "path",
+                    "description": "codigo do produto que deseja excluir",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        }
     }
+
+
+
+
+
+
     
 
 
@@ -273,6 +713,10 @@
         "Adicional":{
                 "type": "object",
                 "properties": {
+                    "codigo":{
+                        "type": "number"
+                    },
+
                     "nome":{
                         "type": "string"
                     },
