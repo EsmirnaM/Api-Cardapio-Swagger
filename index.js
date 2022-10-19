@@ -66,12 +66,12 @@ const adicionalRoutes = require('./routes/adicionalRoutes')
 app.use('/', adicionalRoutes)
 
 
-//Requisicao combo
+//Requisicao pedido
 
-const comboRoutes = require('./routes/pedidoRoutes')
+const pedidoRoutes = require('./routes/pedidoRoutes')
 
 
-app.use('/', comboRoutes)
+app.use('/', pedidoRoutes)
 
 
 
