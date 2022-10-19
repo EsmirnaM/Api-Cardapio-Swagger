@@ -98,7 +98,7 @@ router.post('/pedido', async (req,res) => {
 
 
      //-----------------------------------------Get---------------------------------------------
-     router.get('/pedido', async (req, res) => {
+     router.get('/pedidos', async (req, res) => {
     try {
 
         const pedido = await Pedido.find().populate('cliente').populate('prato').populate('bebida').populate('sobremesa').populate('adicional')
