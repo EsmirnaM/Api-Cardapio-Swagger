@@ -32,10 +32,11 @@
                         "examples": {
                             "Adicional": {
                                 "value": {
-                                    "name":"feijoada",
-                                    "description" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
-                                    "price": 24,
-                                    "veggie": false
+                                    "codigo": 1,
+                                    "nome":"feijoada",
+                                    "descrição" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
+                                    "preço": 24,
+                                    "vegetariano": false
                                 }
                             }
                         }
@@ -155,10 +156,11 @@
                         "examples": {
                             "Adicional": {
                                 "value": {
-                                    "name":"feijoada",
-                                    "description" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
-                                    "price": 25,
-                                    "veggie": false
+                                    "codigo": 1,
+                                    "nome":"feijoada",
+                                    "descrição" : "Arroz, farofa, couve, feijão separado & laranja, carne seca, costela suina, calabresa e paio",
+                                    "preço": 24,
+                                    "vegetariano": false
                                 }
                             }
                         }
@@ -187,18 +189,53 @@
                     "description": "Internal Server Error"
                 }
             }
-        }
-    },
-    "/adicional/name/{name}": {
-        "get": {
-            "description": "Buscar adicionais cadastrados nome",
-            "summary": "Buscar adicionais cadastrados pelo nome",
+        },
+        "delete": {
+            "description": "Excluir adicionais cadastrados pelo id",
+            "summary": "Excluir adicionais cadastrados pelo id",
             "tags": ["Adicionais"],
             "parameters": [
                 {
-                    "name": "name",
+                    "name": "id",
                     "in": "path",
-                    "description": "Nome do produto para busca",
+                    "description": "Id do produto que deseja excluir",
+                    "required": true
+                }
+            ],
+            
+            "responses": {
+                "404": {
+                    "description": "Not Found!"
+                },
+                "200":{
+                    "description": "ok",
+                    "content": {
+                        "application/json": {
+                            "scema": {
+                                "type": "object",
+                                "intens": {
+                                    "$ref": "#/components/schemas/Adicional"
+                                }
+                            }
+                        }
+                    }
+                },
+                "500":{
+                    "description": "Internal Server Error"
+                }
+            }
+        }
+    },
+    "/adicional/codigo/:codigo": {
+        "get": {
+            "description": "Buscar adicionais cadastrados pelo codigo",
+            "summary": "Buscar adicionais cadastrados pelo codigo",
+            "tags": ["Adicionais"],
+            "parameters": [
+                {
+                    "name": "codigo",
+                    "in": "path",
+                    "description": "codigo do produto para busca",
                     "required": true
                 }
             ],
@@ -226,6 +263,7 @@
         }
 
     }
+    
 
 
 },
